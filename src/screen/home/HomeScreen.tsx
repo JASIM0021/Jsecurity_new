@@ -22,7 +22,7 @@ const HomeScreen = ():JSX.Element => {
       <Popover.Footer borderTopWidth="0" >
         <Button.Group>
           <Button bg="red.500" _pressed={{ bg: "red.700" }} _text={{ color: "white" }}>Yes</Button>
-          <Button bg="gray.200" _pressed={{ bg: "gray.400" }}>No</Button>
+          <Button bg="lightWhite" _pressed={{ bg: "gray.400" }}>No</Button>
         </Button.Group>
       </Popover.Footer>
     </Popover.Content>

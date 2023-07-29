@@ -1,4 +1,7 @@
 {
   "name": "Jsecurity_new",
-  "displayName": "Jsecurity_new"
+  "displayName": "Jsecurity_new",
+  "android": {
+    "package": "com.jasim0021.jsecurity_new"
+  }
 }

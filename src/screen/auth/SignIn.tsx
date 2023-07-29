@@ -1,11 +1,55 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Alert, StyleSheet, Text, View } from 'react-native'
+import React, { useState } from 'react'
 import { Box, Button, Center, HStack, Heading, Image, Link, useTheme } from 'native-base'
 import { VStack } from 'native-base'
 import { FormControl } from 'native-base'
 import { Input } from 'native-base'
 import {KeyboardAvoidingScrollView} from 'react-native-keyboard-avoiding-scroll-view';
+import auth from '@react-native-firebase/auth';
+import firebase from '@react-native-firebase/app';
+
+
+const credentials = {
+  clientId: '882361661384-ac8tfgu98jkeasrsa9ha9vrvbss31vv4.apps.googleusercontent.com',
+  appId: '1:882361661384:android:62236213ede31c373172fd',
+  apiKey: 'AIzaSyBYxlhKQ0Hbf_m-yN61a5UspnshruhF3Y8',
+  databaseURL: 'https://jscurity-bfdc5-default-rtdb.firebaseio.com',
+  storageBucket: 'jscurity-bfdc5.appspot.com',
+  messagingSenderId: '882361661384',
+  projectId: 'jscurity-bfdc5',
+};
+
+
 const SignIn = () => {
+  const [user, setuser] = useState({
+    email:'',
+    password:''
+  })
+const singIn =async ()=>{
+  await firebase.initializeApp(credentials)
+   await  auth()
+  .createUserWithEmailAndPassword(user?.email, user?.password)
+  .then(() => {
+    console.log('User account created & signed in!');
+    Alert('User account created & signed in!')
+  })
+  .catch(error => {
+    if (error.code === 'auth/email-already-in-use') {
+      console.log('That email address is already in use!');
+    }
+
+    if (error.code === 'auth/invalid-email') {
+      console.log('That email address is invalid!');
+    }
+
+    console.error(error);
+  });
+
+
+}
+const handleInput =(name:string,text:string)=>{
+  setuser({...user,[name]:text});
+}
     const Them =useTheme()
 
   return (
@@ -23,6 +67,8 @@ const SignIn = () => {
     alt='image'/>
    </Center>
    <KeyboardAvoidingScrollView keyboardDismissMode='interactive' stickyFooter={<Button />}>
+
+ 
 
    <Center w="100%">
       <Box safeArea p="2" py="8" w="90%" maxW="290">
@@ -42,11 +88,16 @@ const SignIn = () => {
         <VStack space={3} mt="5">
           <FormControl>
             <FormControl.Label>Email ID</FormControl.Label>
-            <Input />
+            <Input 
+            onChangeText={(text)=>handleInput('email',text)}
+            />
           </FormControl>
           <FormControl>
             <FormControl.Label>Password</FormControl.Label>
-            <Input type="password" />
+            <Input type="password"  
+            onChangeText={(text)=>handleInput('password',text)}
+            
+            />
             <Link _text={{
             fontSize: "xs",
             fontWeight: "500",
@@ -55,9 +106,10 @@ const SignIn = () => {
               Forget Password?
             </Link>
           </FormControl>
-          <Button mt="2" colorScheme="indigo">
+          <Button mt="2" colorScheme="indigo" onPress={singIn}>
             Sign in
           </Button>
+         
           <HStack mt="6" justifyContent="center">
             <Text fontSize="sm" color="coolGray.600" _dark={{
             color: "warmGray.200"

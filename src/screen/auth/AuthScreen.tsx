@@ -3,8 +3,7 @@ import {  Center, FormControl, Heading, Icon, Image, Input, Pressable, Text, VSt
 import { Box } from 'native-base'
 import { View } from 'native-base'
 import React from 'react'
-import { TouchableOpacity } from 'react-native'
-import Button from '../components/Button'
+import CustomButton from '../components/CustomButton'
 import { useNavigation } from '@react-navigation/native'
 import NavigationString from '../../constant/NavigationString'
 
@@ -41,8 +40,8 @@ const AuthScreen = () => {
           Feel better security with jsecurity
         </Heading>
         <VStack space={10} mt="5">
-        <Button title="Sign In" onPress={()=>{navigation.navigate(NavigationString.signIn)}} bg={Them.colors.primary} textColor={Them.colors.lightWhite}/>
-        <Button title="Sign Up" onPress={()=>{}} bg={Them.colors.secondary} textColor={Them.colors.primary}/>
+        <CustomButton type={'lg'}  title="Sign In" onPress={()=>{navigation.navigate(NavigationString.signIn)}} bg={Them.colors.primary} textColor={Them.colors.lightWhite}/>
+        <CustomButton type={'lg'} title="Sign Up" onPress={()=>{}} bg={Them.colors.secondary} textColor={Them.colors.primary}/>
 
       
             </VStack>

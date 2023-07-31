@@ -3,4 +3,5 @@ export default {
   OnBoarding: "OnBoarding",
   auth: "Auth",
   signIn: "SignIn",
+  otpSignin: "OtpSignin",
 };

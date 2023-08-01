@@ -6,6 +6,7 @@ const GlobalSlice = createSlice({
   name: "auth",
   initialState: {
     user: {},
+    location: {},
     initialScreen: NavigationString.OnBoarding,
   },
   reducers: {
@@ -16,8 +17,11 @@ const GlobalSlice = createSlice({
     changeInitialScreen: (state, action) => {
       state.initialScreen = action.payload;
     },
+    setLocation: (state, action) => {
+      state.location = action.payload;
+    },
   },
 });
 
-export const { saveUser } = GlobalSlice.actions;
+export const { saveUser, setLocation } = GlobalSlice.actions;
 export default GlobalSlice.reducer;

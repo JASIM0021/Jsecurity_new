@@ -6,6 +6,7 @@ import { AppRegistry } from "react-native";
 import App from "./App";
 import { name as appName } from "./app.json";
 import OneSignal from "react-native-onesignal";
+import "react-native-reanimated";
 
 // OneSignal Initialization
 OneSignal.setAppId("d56cc75b-0d9c-4c90-8861-f654ac2a1549");

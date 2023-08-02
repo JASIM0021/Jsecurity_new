@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Button, StatusBar, StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, Button, StatusBar, StyleSheet, View } from 'react-native';
 import { Drawer } from 'react-native-drawer-layout';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Sidebar from '../components/SideBar';
@@ -17,6 +17,8 @@ import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import Geolocation from '@react-native-community/geolocation';
 import { CameraPermission } from '../../permission/cameraPermision';
 import { Camera, useCameraDevices } from 'react-native-vision-camera';
+import { Text } from 'react-native-svg';
+import { BarcodeFormat, useScanBarcodes } from 'vision-camera-code-scanner';
  
 
 
@@ -26,8 +28,12 @@ const HomeScreen = (): JSX.Element => {
   const [open, setOpen] = React.useState(false);
   const [isDilogOPen,setIsDilogOpen]=React.useState(false);
   const navigation =useNavigation()
-  const devices = useCameraDevices()
-  const device = devices.back;
+  const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
+    checkInverted: true,
+  });
+  const devices = useCameraDevices('wide-angle-camera')
+  const device = devices.back
+  console.log('device', device)
   const handleLogout=async()=>{
     AsyncStorage.clear()
     GoogleSignin.signOut();
@@ -66,9 +72,11 @@ const HomeScreen = (): JSX.Element => {
       clearInterval(Intraval)
     }
   },[])
+  if (device == null) return <ActivityIndicator color={'blue'} />;
   return (
-    <>
+    < >
        <Drawer
+       
       open={open}
       drawerType='front'
       statusBarAnimation='slide'
@@ -80,22 +88,34 @@ const HomeScreen = (): JSX.Element => {
     >
     
 
-      <Center>
+ 
 
       <AppBar onHambunger={()=>setOpen((prevOpen) => !prevOpen)} title='Home'/>
-
-      </Center>
-    </Drawer>
-    <CustomAlertDialog isOpen={isDilogOPen} setIsOpen={setIsDilogOpen} header="logout" body="are you sure to logout , if you sure then press okey " onOkey={()=>{
- <Camera
- style={StyleSheet.absoluteFill}
- device={device}
- isActive={true}
+      <Camera
+style={{width: 'auto', height:'50%'}}
+device={device}
+isActive={true}
+frameProcessor={frameProcessor}
+frameProcessorFps={5}
 />
+ 
+
+
+   
+    </Drawer>
+   
+    <CustomAlertDialog isOpen={isDilogOPen} setIsOpen={setIsDilogOpen} header="logout" body="are you sure to logout , if you sure then press okey " onOkey={()=>{
+
     handleLogout()
     }}/>
 
+
+
+
+
     </>
+
+
      
   )
 };

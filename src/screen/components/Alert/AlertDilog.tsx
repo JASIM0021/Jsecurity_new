@@ -1,5 +1,5 @@
 import { AlertDialog, Button, Center } from "native-base";
-import React from "react";
+import React, { memo } from "react";
 
 const CustomAlertDialog = ({isOpen,setIsOpen,header,body,onOkey}) => {
   
@@ -21,7 +21,7 @@ const CustomAlertDialog = ({isOpen,setIsOpen,header,body,onOkey}) => {
                   Cancel
                 </Button>
                 <Button colorScheme="danger" onPress={onOkey}>
-                  Delete
+                  Okey
                 </Button>
               </Button.Group>
             </AlertDialog.Footer>
@@ -31,4 +31,4 @@ const CustomAlertDialog = ({isOpen,setIsOpen,header,body,onOkey}) => {
   };
 
 
-  export default CustomAlertDialog
+  export default memo(CustomAlertDialog)

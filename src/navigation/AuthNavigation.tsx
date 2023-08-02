@@ -14,13 +14,15 @@ export default function AuthNavigation (): JSX.Element {
 const Stack = createNativeStackNavigator ();
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={NavigationString.OnBoarding} screenOptions={{
-        headerShown:false
-      }}>
+      <Stack.Navigator initialRouteName={NavigationString.OnBoarding} >
       <Stack.Screen name={NavigationString.OnBoarding} component={screen.OnBoarding} />
-        <Stack.Screen name="Home" component={screen.Home} />
+        <Stack.Screen name="Home" component={screen.Home} options={{
+          headerShown:false
+        }} />
 
-        <Stack.Screen name={NavigationString.auth} component={screen.auth} />
+        <Stack.Screen name={NavigationString.auth} component={screen.auth} options={{
+          headerShown:false
+        }}/>
         <Stack.Screen name={NavigationString.signIn} component={screen.signIn} />
         <Stack.Screen name={NavigationString.otpSignin} component={screen.OtpSignIn} />
 

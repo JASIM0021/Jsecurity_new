@@ -38,6 +38,7 @@ function  App(): JSX.Element {
     }
    useEffect(()=>{
     getUser();
+
    },[])
 
   const colorModeManager: StorageManager = {

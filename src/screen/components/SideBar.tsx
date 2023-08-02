@@ -2,8 +2,18 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon, Avatar } from 'native-base';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
-const Sidebar = ({ profileImage, name, email, onProfileSettings, onAccount, onDevices, onLogout }) => {
+type ISlideprops={
+  profileImage:string,
+   name:string, 
+   email:string, 
+   onProfileSettings:any, 
+   onAccount:any, 
+   onDevices:any,
+    onLogout:any
+}
+const Sidebar = (data:ISlideprops) => {
+const { profileImage, name, email, onProfileSettings, onAccount, onDevices, onLogout }=data
+  console.log('profileImage', profileImage)
   return (
     <View flex={1} backgroundColor="white">
       {/* Profile Settings */}

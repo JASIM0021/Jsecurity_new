@@ -61,7 +61,7 @@ const  BarcodeScanner =({user})=> {
           </Text>
         }
         bottomContent={
-<View style={{alignItems:'cente',justifyContent:'center',marginTop:20}}>
+<View style={{alignItems:'center',justifyContent:'center',marginTop:20}}>
 <CustomButton type={'lg'}  title="Go Back" onPress={()=>{setShowScanner(false)}} bg={Them.colors.blue[700]} textColor={Them.colors.lightWhite}/>
     
 

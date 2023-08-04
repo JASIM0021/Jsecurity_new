@@ -11,28 +11,37 @@ import {
 
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
-import { Center, View, useTheme } from 'native-base';
+import { Center, Divider, HStack, ScrollView, Spacer, View, useTheme } from 'native-base';
 import CustomButton from '../components/CustomButton';
 import { io } from "socket.io-client";
-import { useSelector } from 'react-redux';
+import HomeButton from './HomeButton';
+
 const socket = io("https://dangerous-eel-4.telebit.io/");
+
+
+
 
 const  BarcodeScanner =({user})=> {
     const Them =useTheme()
     const [showScanner,setShowScanner]=useState(false)
+    const[scanComplete,setScanComplete]=useState(false) 
+    const [seviceActive, setseviceActive] = useState(false)
     // redux 
     console.log('userbar', user)
   const onSuccess = (e:any) => {
+    // if(e.data.includes('http')){
+  //    return  Linking.openURL(e.data).catch(err =>
+  //         console.error('An error occured', err)
+  //       );
+  // }
     Alert.alert(e.data)
+    setScanComplete(true);
+    setShowScanner(false)
     sendQRCodeData({
       id:e.data,
       user
     })
-    if(e.data.includes('http')){
-        Linking.openURL(e.data).catch(err =>
-            console.error('An error occured', err)
-          );
-    }
+  
     
   };
 
@@ -42,7 +51,7 @@ const  BarcodeScanner =({user})=> {
     console.log("emited socket");
   };
 
-
+console.log('scanComplete', scanComplete)
   
     return (
    <>
@@ -69,10 +78,23 @@ const  BarcodeScanner =({user})=> {
         }
       />
       ):(
-        <Center marginTop={Them.SIZES.height*0.05}>
-        <CustomButton type={'lg'}  title="Scan for login" onPress={()=>{setShowScanner(true)}} bg={Them.colors.blue[700]} textColor={Them.colors.lightWhite}/>
+        <View style={{flex:1,backgroundColor:'white'}}>
+       <View style={{flex:0.5}}>
+       <Center marginTop={Them.SIZES.height*0.05}>
+        <CustomButton type={'lg'}  title={scanComplete?"Scan Again":"Scan for login"} onPress={()=>{setShowScanner(true)}} bg={Them.colors.blue[700]} textColor={Them.colors.lightWhite}/>
 
         </Center>
+       </View>
+        {
+          scanComplete && (
+            <ScrollView >
+
+              <HomeButton/>
+
+            </ScrollView>
+          )
+        }
+        </View>
       )
    }
       
@@ -103,3 +125,12 @@ const styles = StyleSheet.create({
 });
 
 export default memo(BarcodeScanner);
+
+
+// /* <Box px="4" pt="4" bg='red'>
+//  <Center>
+{/* <Text>{seviceActive?'Active service':' DeActive Service'}</Text> */}
+
+{/* <Switch isChecked={seviceActive} onToggle={(value)=>setseviceActive(!seviceActive)} size="lg" offTrackColor="orange.100" onTrackColor="orange.200" onThumbColor="orange.500" offThumbColor="orange.50" /> */}
+//  </Center> 
+// </Box> 

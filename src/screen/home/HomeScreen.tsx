@@ -16,8 +16,11 @@ import { requestLocationPermission } from '../../permission/locationPermission';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import Geolocation from '@react-native-community/geolocation';
 import BarcodeScanner from './BarcodeScanner';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { saveUser } from '../../features/slice/GlobalSlice';
+import getDeviceInfo from '../../logic/DeviceInfo';
+import { saveDeviceInfo, saveDeviceLocation } from '../../features/slice/device/deviceSlice';
+import { useSaveDeviceToDbMutation } from '../../features/api/device/deviceSlice';
  
 
 
@@ -33,9 +36,11 @@ const HomeScreen = (): JSX.Element => {
   const navigation =useNavigation()
 
   // redux state 
+const {deviceInfo,deviceLocation}=useSelector((state:any)=>state.deviceSlice)
+const dispatch=useDispatch()
 
+const [saveedviseInformation,{data,isLoading}]=useSaveDeviceToDbMutation()
   
-
 
 
   // function
@@ -60,7 +65,8 @@ const HomeScreen = (): JSX.Element => {
       });
 
       Geolocation.getCurrentPosition((position)=>{
-        console.log(position)
+        dispatch(saveDeviceLocation(position))
+        
        })
 
 
@@ -68,18 +74,42 @@ const HomeScreen = (): JSX.Element => {
   const getUser =async()=>{
     const result=  await AsyncStorage.getItem('user')
     const parseValue = await JSON.parse(result as string)
+    console.log('parseValue', parseValue)
     setUser(parseValue);
-    saveUser(parseValue);
+    dispatch(saveUser(parseValue));
  
     }
     useEffect(()=>{
-      getUser()
+      getUser();
+    
+   
     },[])
+    useEffect(()=>{
+      if(deviceInfo?.deviceName){
+        saveedviseInformation({
+          deviceId:deviceInfo?.androidId,
+          deviceName:deviceInfo?.deviceInfo,
 
-  // useEffect
+          location:deviceLocation,
+          userId:user?.user?.id,
+          otherData:deviceInfo
+        
+        })
+      }
+    },[deviceInfo])
+
   // useEffect(()=>{
   //   requestLocationPermission()
   //   const Intraval =setInterval(()=>{
+  //     (async()=>{
+  //       const devicedata=await getDeviceInfo()
+  //       if(devicedata){
+  
+  //          dispatch(saveDeviceInfo(devicedata))
+  //       }
+  
+  //      }
+  //       )()
   //     getLocation()
   //   },5000)
   //   getLocation()

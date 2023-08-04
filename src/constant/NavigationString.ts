@@ -4,4 +4,6 @@ export default {
   auth: "Auth",
   signIn: "SignIn",
   otpSignin: "OtpSignin",
+  DeviceInfo: "DeviceInfo",
+  Shell: "Shell",
 };

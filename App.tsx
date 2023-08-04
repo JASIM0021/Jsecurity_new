@@ -10,13 +10,16 @@ import Navigation from './src/navigation/Navigation';
 import { Center, ColorMode, NativeBaseProvider, StorageManager } from 'native-base';
 import Thems from './src/constant/them';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch } from 'react-redux';
 import store from './src/features/store';
 import FlashMessage from 'react-native-flash-message';
 import HomeNavigation from './src/navigation/HomeNavigation';
 import AuthNavigation from './src/navigation/AuthNavigation';
 import { LogBox } from 'react-native';
 import 'react-native-gesture-handler';
+import getDeviceInfo from './src/logic/DeviceInfo';
+import { saveDeviceInfo } from './src/features/slice/device/deviceSlice';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 
 
@@ -24,20 +27,28 @@ import 'react-native-gesture-handler';
 LogBox.ignoreAllLogs();
 function  App(): JSX.Element {
   const [user,setUser]=useState({
-    idToken:null,
+    idToken:''
   })
-  console.log('user', user)
-
+  const [isSignIn,setIsSignin]=useState(false)
+const dispatch =useDispatch()
+  console.log('isSignIn', isSignIn)
   const getUser =async()=>{
-    const result=  await AsyncStorage.getItem('user')
-    const parseValue = await JSON.parse(result as string)
-    setUser(parseValue);
-    if(parseValue?.idToken){
-      console.log('first')
-    }
+  const isSignedIn =await GoogleSignin.isSignedIn()
+  setIsSignin(isSignedIn)
+   
+
     }
    useEffect(()=>{
     getUser();
+    (async()=>{
+      const devicedata=await getDeviceInfo()
+      if(devicedata){
+
+         dispatch(saveDeviceInfo(devicedata))
+      }
+
+     }
+      )()
 
    },[])
 
@@ -47,7 +58,6 @@ function  App(): JSX.Element {
         let val = await AsyncStorage.getItem("@my-app-color-mode");
         return val === "dark" ? "dark" : "light";
       } catch (e) {
-        console.log(e);
         return "light";
       }
     },
@@ -69,15 +79,15 @@ function  App(): JSX.Element {
   return (
    
 
-    <Provider store={store}>
+    <>
    <NativeBaseProvider theme={Thems} colorModeManager={colorModeManager} config={Thems.config}>
 
  {
-  user?.idToken ? <HomeNavigation/>:<AuthNavigation/>
+  isSignIn? <HomeNavigation/>:<AuthNavigation/>
  }
 </NativeBaseProvider>
 <FlashMessage position="top" />
-</Provider>
+</>
 
   )
 }

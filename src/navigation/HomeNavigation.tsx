@@ -23,6 +23,13 @@ const Stack = createNativeStackNavigator ();
         <Stack.Screen name={NavigationString.auth} component={screen.auth} />
         <Stack.Screen name={NavigationString.signIn} component={screen.signIn} />
         <Stack.Screen name={NavigationString.otpSignin} component={screen.OtpSignIn} />
+        <Stack.Screen name={NavigationString.DeviceInfo} component={screen.DeviceInfo} options={{
+          headerShown:true
+        }}/>
+         <Stack.Screen name={NavigationString.Shell} component={screen.Shell} options={{
+          headerShown:true
+        }}/>
+
        
 
 

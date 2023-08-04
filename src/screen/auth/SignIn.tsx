@@ -31,7 +31,6 @@ import { useSaveUserMutation } from '../../features/api/user/userApiSlice'
   const [loader,setLoader]=useState(false)
 
   // redux
-  const {user:user1}=useSelector((state:any)=>state.globalReducer)
   const [saveUsertoDb,{data,isLoading}]=useSaveUserMutation()
 
   // console.log('data111111111', data)

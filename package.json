@@ -25,6 +25,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "axios": "^1.4.0",
     "native-base": "^3.4.28",
+    "qs": "^6.11.2",
     "react": "18.2.0",
     "react-native": "0.72.3",
     "react-native-android-location-enabler": "^1.2.2",
@@ -44,6 +45,7 @@
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-vector-icons": "^10.0.0",
     "react-redux": "^8.1.2",
+    "rn-direct-phone-call": "^0.1.2",
     "rnfetchapi": "^1.0.7",
     "socket.io-client": "^4.7.1"
   },
@@ -54,6 +56,7 @@
     "@react-native/eslint-config": "^0.72.2",
     "@react-native/metro-config": "^0.72.9",
     "@tsconfig/react-native": "^3.0.0",
+    "@types/qs": "^6.9.7",
     "@types/react": "^18.0.24",
     "@types/react-native-onboarding-swiper": "^1.1.4",
     "@types/react-native-vector-icons": "^6.4.13",

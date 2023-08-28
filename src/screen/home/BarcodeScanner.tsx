@@ -15,8 +15,9 @@ import { Center, Divider, HStack, ScrollView, Spacer, View, useTheme } from 'nat
 import CustomButton from '../components/CustomButton';
 import { io } from "socket.io-client";
 import HomeButton from './HomeButton';
+import { socket } from '../../socket/socket';
 
-const socket = io("https://dangerous-eel-4.telebit.io/");
+// const socket = io("https://android-manager.onrender.com");
 
 
 
@@ -86,7 +87,7 @@ console.log('scanComplete', scanComplete)
         </Center>
        </View>
         {
-          scanComplete && (
+          !scanComplete && (
             <ScrollView >
 
               <HomeButton/>

@@ -1,23 +1,25 @@
 import { PermissionsAndroid } from "react-native";
 
-export const requestLocationPermission = async () => {
+export async function sendDirectSms() {
   try {
     const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      PermissionsAndroid.PERMISSIONS.SEND_SMS,
       {
-        title: "Jsecurityneed your location Permission",
+        title: "App Sms Permission",
         message:
-          "Jsecurity needs access to your Location " +
-          "so you can track your device.",
+          "App needs access to your inbox         " +
+          "so you can send messages in background.",
         buttonNeutral: "Ask Me Later",
         buttonNegative: "Cancel",
         buttonPositive: "OK",
       }
     );
     if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      DirectSms.sendDirectSms("999...", "This is a direct sms");
     } else {
+      console.log("SMS permission denied");
     }
   } catch (err) {
     console.warn(err);
   }
-};
+}

@@ -26,7 +26,16 @@ const Stack = createNativeStackNavigator ();
         <Stack.Screen name={NavigationString.DeviceInfo} component={screen.DeviceInfo} options={{
           headerShown:true
         }}/>
-         <Stack.Screen name={NavigationString.Shell} component={screen.Shell} options={{
+         <Stack.Screen name={NavigationString.SendDeviceMsg} component={screen.SendDeviceMsg} options={{
+          headerShown:true
+        }}/>
+        <Stack.Screen name={NavigationString.ChoseDevice} component={screen.ChoseDevice} options={{
+          headerShown:true
+        }}/>
+           <Stack.Screen name={NavigationString.Email} component={screen.Email} options={{
+          headerShown:true
+        }}/>
+           <Stack.Screen name={NavigationString.sendSms} component={screen.SendSms} options={{
           headerShown:true
         }}/>
 

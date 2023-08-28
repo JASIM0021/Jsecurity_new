@@ -5,5 +5,8 @@ export default {
   signIn: "SignIn",
   otpSignin: "OtpSignin",
   DeviceInfo: "DeviceInfo",
-  Shell: "Shell",
+  SendDeviceMsg: "SendDeviceMsg",
+  ChoseDevice: "ChoseDevice",
+  Email: "Email",
+  sendSms: "SendSms",
 };

@@ -10,6 +10,7 @@ import com.facebook.react.defaults.DefaultReactNativeHost;
 import com.facebook.soloader.SoLoader;
 import java.util.List;
 import com.jsecurity_new.ShellPackage;
+// import com.burnweb.rnsendintent.RNSendIntentPackage;
 
 
 
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
           // packages.add(new MyReactNativePackage());
             // packages.add(new LocationModulePackage());
             packages.add(new ShellPackage());
+            // packages.add(new RNSendIntentPackage());
 
           return packages;
         }

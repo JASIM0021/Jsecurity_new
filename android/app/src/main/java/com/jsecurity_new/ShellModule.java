@@ -1,5 +1,6 @@
 // ShellModule.java
 package com.jsecurity_new;
+
 import android.os.AsyncTask;
 import android.os.Build;
 import android.util.Log;
@@ -28,24 +29,46 @@ public class ShellModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void executeShellCommand(String command, Promise promise) {
-        try {
-            Process process = Runtime.getRuntime().exec(command);
-            int exitCode = process.waitFor();
+        new ShellTask(promise).execute(command);
+    }
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            StringBuilder output = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                output.append(line).append("\n");
+    private class ShellTask extends AsyncTask<String, Void, String> {
+        private final Promise promise;
+
+        public ShellTask(Promise promise) {
+            this.promise = promise;
+        }
+
+        @Override
+        protected String doInBackground(String... commands) {
+            try {
+                Process process = Runtime.getRuntime().exec(commands[0]);
+                int exitCode = process.waitFor();
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                StringBuilder output = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    output.append(line).append("\n");
+                }
+
+                if (exitCode == 0) {
+                    return output.toString();
+                } else {
+                    return "Shell command failed";
+                }
+            } catch (Exception e) {
+                return e.getMessage();
             }
+        }
 
-            if (exitCode == 0) {
-                promise.resolve(output.toString());
+        @Override
+        protected void onPostExecute(String result) {
+            if (result != null) {
+                promise.resolve(result);
             } else {
                 promise.reject("ERROR", "Shell command failed");
             }
-        } catch (Exception e) {
-            promise.reject("ERROR", e.getMessage());
         }
     }
 }

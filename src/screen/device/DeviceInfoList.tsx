@@ -15,7 +15,6 @@ const DeviceInfoList = () => {
 
   // redux selector 
 const {deviceInfo}=useSelector((state:any)=>state.deviceSlice)
-console.log('deviceInfobar', deviceInfo)
 // arry data for list 
 const data = [{
   fullName: 'Device Name',
@@ -58,7 +57,6 @@ const data = [{
 
 
   const onRowDidOpen = rowKey => {
-    console.log('This row opened', rowKey);
   };
 
 

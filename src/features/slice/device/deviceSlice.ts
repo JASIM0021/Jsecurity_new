@@ -6,17 +6,22 @@ const DeviceSlice = createSlice({
   initialState: {
     deviceInfo: {},
     deviceLocation: {},
+    selectedDevice: {},
   },
   reducers: {
     saveDeviceInfo: (state, action) => {
-      console.warn("action", action);
       state.deviceInfo = action.payload;
     },
     saveDeviceLocation: (state, action) => {
+      console.warn("save device to db", action);
       state.deviceLocation = action.payload;
+    },
+    saveSelectedDevice: (state, action) => {
+      state.selectedDevice = action.payload;
     },
   },
 });
 
-export const { saveDeviceInfo, saveDeviceLocation } = DeviceSlice.actions;
+export const { saveDeviceInfo, saveDeviceLocation, saveSelectedDevice } =
+  DeviceSlice.actions;
 export default DeviceSlice.reducer;

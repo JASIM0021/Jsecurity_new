@@ -20,8 +20,10 @@ const GlobalSlice = createSlice({
     setLocation: (state, action) => {
       state.location = action.payload;
     },
+  
   },
 });
 
 export const { saveUser, setLocation } = GlobalSlice.actions;
 export default GlobalSlice.reducer;
+

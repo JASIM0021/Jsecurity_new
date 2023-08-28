@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-let API_URL = "https://dangerous-eel-4.telebit.io/api/v1/";
+let url = "https://android-manager.onrender.com";
+let API_URL = `${url}/api/v1/`;
+// let API_URL = "https://dangerous-eel-4.telebit.io";
 
 const globalApiSlice = createApi({
   reducerPath: "jsecurity",

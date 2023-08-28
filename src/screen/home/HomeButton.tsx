@@ -32,16 +32,35 @@ const HomeButton = () => {
         },
         {
             btn1:{
-              name:'Shell',
-              icon: 'codesquareo',
-              onPress: ()=>{navigation.navigate(NavigationString.Shell)}
+              name:'Send Message',
+              icon: 'message1',
+              onPress: ()=>{navigation.navigate(NavigationString.ChoseDevice,{
+                screen:NavigationString.SendDeviceMsg as string
+              })}
             },
             btn2:{
-              name:'deviceinfo',
-              icon: 'mobile1',
-              onPress: ()=>{navigation.navigate(NavigationString.DeviceInfo)}
-      
-            }
+              name:'Send e-mail',
+              icon: 'mail',
+              onPress: ()=>{navigation.navigate(NavigationString.ChoseDevice,{
+                screen:NavigationString.Email as string
+              })}
+            },
+          },
+          {
+            btn1:{
+              name:'Send Message',
+              icon: 'message1',
+              onPress: ()=>{navigation.navigate(NavigationString.ChoseDevice,{
+                screen:NavigationString.SendDeviceMsg as string
+              })}
+            },
+            btn2:{
+              name:'Send Sms From Device',
+              icon: 'mail',
+              onPress: ()=>{navigation.navigate(NavigationString.ChoseDevice,{
+                screen:NavigationString.sendSms as string
+              })}
+            },
           },
         
     ]

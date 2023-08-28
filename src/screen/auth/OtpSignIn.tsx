@@ -13,7 +13,6 @@ const OtpSignIn = () => {
         email:'',
         password:''
       })
-      console.log('user', user)
     const Them =useTheme()
     const signIn = async () => {
         try {
